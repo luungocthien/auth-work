@@ -78,14 +78,14 @@ const signupUser = async (req, res) => {
 // @route   POST /api/users/login
 // @access  Public
 const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
   try {
-    // Check for user email
-    const user = await User.findOne({ email });
+    // Check for user username
+    const user = await User.findOne({ username });
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const token = generateToken(user._id);
-      res.status(200).json({ email, token });
+      res.status(200).json({ username, token });
     } else {
       res.status(400);
       throw new Error("Invalid credentials");
